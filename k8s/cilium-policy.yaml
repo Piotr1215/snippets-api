@@ -1,0 +1,22 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "readflights"
+spec:
+  description: "Allow HTTP GET /version from app=version_reader to type=service"
+  endpointSelector:
+    matchLabels:
+      type: service 
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: version_reader
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+      rules:
+        http:
+        - method: "GET"
+          path: "/version"
+

@@ -1,0 +1,6 @@
+{
+  "id": "get1",
+  "command": "kubectl get pods -A",
+  "description": "Gets pods across all namespaces",
+  "difficulty": 1
+}
