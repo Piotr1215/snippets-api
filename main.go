@@ -170,8 +170,11 @@ func (g *gistHandler) gists(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
 	defer res.Body.Close()
+
 	snippets, err := ioutil.ReadAll(res.Body)
+
 	var snips Snippetor
 
 	err = json.Unmarshal(snippets, &snips)
@@ -186,7 +189,8 @@ func (g *gistHandler) gists(w http.ResponseWriter, r *http.Request) {
 func main() {
 	handler := newCommandsHandler()
 	gistHandler := newGistHandler()
-	http.HandleFunc("/gists/", gistHandler.gists)
+
+	http.HandleFunc("/gists", gistHandler.gists)
 	http.HandleFunc("/commands", handler.commands)
 	http.HandleFunc("/commands/", handler.id)
 	fmt.Println(fmt.Sprintf("%s%s", "go to: http://localhost", Port))
